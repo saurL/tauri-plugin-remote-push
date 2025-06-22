@@ -2,27 +2,26 @@
 
 A plugin for Tauri v2 that enables applications to receive remote push notifications via Firebase Cloud Messaging (FCM) on Android and Apple Push Notification Service (APNs) on iOS.
 
-Due to the security sandboxing of the Tauri plugin system, a fully automated setup is not possible. This plugin requires **manual modification of your native host application code** to integrate the necessary notification services.
+This plugin is self-contained and handles its own native dependencies. However, you must still perform some **manual modification of your native host application code** to integrate the necessary notification services.
 
 ## Prerequisites
 
 - A working Tauri v2 project.
 - A Firebase project for Android.
 - An Apple Developer account with push notification capabilities for iOS.
+- You must have generated the native mobile projects by running `tauri android init` and `tauri ios init`.
 
 ## Setup
 
-There are two parts to the setup: installing the plugin package and configuring the native host project.
-
 ### 1. Install Plugin Package
 
-Add the plugin to your `Cargo.toml` and install the JavaScript package:
-
 ```sh
+# Add the rust part
 cargo add tauri-plugin-remote-push
 ```
 
 ```sh
+# Add the javascript part
 npm install tauri-plugin-remote-push-api
 # or
 yarn add tauri-plugin-remote-push-api
@@ -51,12 +50,7 @@ pub fn run() {
 
 ## Platform-Specific Configuration
 
-This is the **critical manual step** required to make the plugin functional. Before you begin, ensure you have generated the native mobile projects by running:
-
-```sh
-tauri android init
-tauri ios init
-```
+This is the **critical manual step** required to make the plugin functional.
 
 ### iOS Configuration
 
@@ -107,22 +101,13 @@ tauri ios init
     *   Download the `google-services.json` file for your Android app.
     *   Place this file in the `src-tauri/gen/android/[YOUR_APP_NAME]/app/` directory.
 
-2.  **Modify `build.gradle` files**:
+2.  **Modify `build.gradle` file**:
     *   **Project-level** (`src-tauri/gen/android/[YOUR_APP_NAME]/build.gradle`): Add the Google services classpath.
         ```groovy
         // buildscript -> dependencies
         dependencies {
+            // Note: Check for the latest version of this library
             classpath 'com.google.gms:google-services:4.4.1'
-        }
-        ```
-    *   **App-level** (`src-tauri/gen/android/[YOUR_APP_NAME]/app/build.gradle`): Add the Google services plugin and Firebase Messaging dependency.
-        ```groovy
-        // At the top of the file
-        apply plugin: 'com.google.gms.google-services'
-
-        // dependencies { ... }
-        dependencies {
-            implementation 'com.google.firebase:firebase-messaging:23.4.1'
         }
         ```
 
@@ -176,11 +161,3 @@ const unsubscribeToken = await onTokenRefresh((token) => {
 ## License
 
 This project is licensed under the MIT License.
-
----
-
-## Troubleshooting
-
-### Android Build Failures
-
-The Android build system is complex. If you encounter build failures related to this plugin, it is often due to dependency resolution issues. This plugin bundles its required Tauri Android libraries (`core-android`) to minimize these issues. If you see errors like `Could not resolve project :tauri-plugin-remote-push` or `Could not resolve project :core-android`, ensure you have the latest version of this plugin and run `cargo update` in your project.
