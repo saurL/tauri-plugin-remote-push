@@ -1,6 +1,6 @@
 {
   "name": "tauri-plugin-remote-push-api",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "You",
   "description": "A Tauri plugin for remote push notifications on iOS and Android.",
   "type": "module",
