@@ -20,7 +20,16 @@ Add the plugin to your `Cargo.toml` and install the JavaScript package:
 
 ```sh
 cargo add tauri-plugin-remote-push
-npm install tauri-plugin-remote-push-api # or pnpm, yarn
+```
+
+```sh
+npm install tauri-plugin-remote-push-api
+# or
+yarn add tauri-plugin-remote-push-api
+# or
+pnpm add tauri-plugin-remote-push-api
+# or
+bun add tauri-plugin-remote-push-api
 ```
 
 ### 2. Register the Plugin
@@ -42,7 +51,12 @@ pub fn run() {
 
 ## Platform-Specific Configuration
 
-This is the **critical manual step** required to make the plugin functional.
+This is the **critical manual step** required to make the plugin functional. Before you begin, ensure you have generated the native mobile projects by running:
+
+```sh
+tauri android init
+tauri ios init
+```
 
 ### iOS Configuration
 
@@ -98,17 +112,17 @@ This is the **critical manual step** required to make the plugin functional.
         ```groovy
         // buildscript -> dependencies
         dependencies {
-            classpath 'com.google.gms:google-services:4.4.1' // Add this line
+            classpath 'com.google.gms:google-services:4.4.1'
         }
         ```
     *   **App-level** (`src-tauri/gen/android/[YOUR_APP_NAME]/app/build.gradle`): Add the Google services plugin and Firebase Messaging dependency.
         ```groovy
         // At the top of the file
-        apply plugin: 'com.google.gms.google-services' // Add this line
+        apply plugin: 'com.google.gms.google-services'
 
         // dependencies { ... }
         dependencies {
-            implementation 'com.google.firebase:firebase-messaging:23.4.1' // Add this line
+            implementation 'com.google.firebase:firebase-messaging:23.4.1'
         }
         ```
 
