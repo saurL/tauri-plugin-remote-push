@@ -1,6 +1,6 @@
 [package]
 name = "tauri-plugin-remote-push"
-version = "1.0.4"
+version = "1.0.5"
 authors = [ "You" ]
 description = "A Tauri plugin for remote push notifications on iOS and Android."
 license = "MIT"

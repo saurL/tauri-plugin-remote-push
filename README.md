@@ -181,14 +181,6 @@ This project is licensed under the MIT License.
 
 ## Troubleshooting
 
-### Android Build Error: `Could not resolve project :tauri-plugin-remote-push`
+### Android Build Failures
 
-If you encounter this error during an Android build, it means the main application project (`:app`) does not know where to find the native Android source code for the plugin.
-
-The Tauri build system relies on a special metadata section in the plugin's `Cargo.toml` file (`[package.metadata.tauri-plugin]`) to auto-discover the native code. If this section is missing or incorrect, the plugin will not be automatically added to your Android project's `settings.gradle`, causing the build to fail.
-
-Ensure your plugin version is up-to-date and that its `Cargo.toml` contains the correct metadata, then try running `cargo update` in your application.
-
-### Android Build Error: `Could not resolve project :core-android`
-
-If the build fails with this error, it means the plugin's internal Android build script (`build.gradle.kts`) is trying to link against a local `:core-android` module that doesn't exist in your build environment. This is an issue with the plugin's packaging. Ensure you are using a version of the plugin where this has been corrected to use a remote dependency (`app.tauri:core-android:...`) instead.
+The Android build system is complex. If you encounter build failures related to this plugin, it is often due to dependency resolution issues. This plugin bundles its required Tauri Android libraries (`core-android`) to minimize these issues. If you see errors like `Could not resolve project :tauri-plugin-remote-push` or `Could not resolve project :core-android`, ensure you have the latest version of this plugin and run `cargo update` in your project.

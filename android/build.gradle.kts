@@ -24,10 +24,10 @@ android {
 }
 
 dependencies {
-    // The core Tauri Android libraries are provided by the parent project,
-    // so we use compileOnly to avoid bundling them.
-    // This dependency points to the official Tauri android library on Maven Central.
-    compileOnly("app.tauri:core-android:0.5.2")
+    // The core Tauri Android libraries are bundled with the plugin to ensure
+    // they are available at compile time. This is a workaround for dependency
+    // resolution issues in some environments.
+    implementation("app.tauri:core-android:0.5.2")
     // Dependency for Firebase Cloud Messaging, used in the plugin's Kotlin code
     implementation("com.google.firebase:firebase-messaging:23.4.1")
 } 
