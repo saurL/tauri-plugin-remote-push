@@ -176,3 +176,15 @@ const unsubscribeToken = await onTokenRefresh((token) => {
 ## License
 
 This project is licensed under the MIT License.
+
+---
+
+## Troubleshooting
+
+### Android Build Error: `Could not resolve project :tauri-plugin-remote-push`
+
+If you encounter this error during an Android build, it means the main application project (`:app`) does not know where to find the native Android source code for the plugin.
+
+The Tauri build system relies on a special metadata section in the plugin's `Cargo.toml` file (`[package.metadata.tauri-plugin]`) to auto-discover the native code. If this section is missing or incorrect, the plugin will not be automatically added to your Android project's `settings.gradle`, causing the build to fail.
+
+Ensure your plugin version is up-to-date and that its `Cargo.toml` contains the correct metadata, then try running `cargo update` in your application.
