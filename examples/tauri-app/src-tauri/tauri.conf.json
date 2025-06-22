@@ -1,6 +1,6 @@
 {
   "productName": "tauri-app",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "identifier": "com.tauri.dev",
   "build": {
     "beforeDevCommand": "pnpm dev",
