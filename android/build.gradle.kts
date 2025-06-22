@@ -9,24 +9,29 @@ android {
 
     defaultConfig {
         minSdk = 21
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        consumerProguardFiles("proguard-rules.pro")
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
-    // This now points to the local :core-android module which is included
-    // in this plugin's source tree.
-    implementation(project(":core-android"))
-    // Dependency for Firebase Cloud Messaging, used in the plugin's Kotlin code
+    // This correctly points to the local :tauri-android module included by settings.gradle
+    compileOnly(project(":tauri-android"))
     implementation("com.google.firebase:firebase-messaging:23.4.1")
 } 
