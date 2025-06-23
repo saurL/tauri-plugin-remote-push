@@ -12,12 +12,16 @@ tauri::ios_plugin_binding!(init_plugin_remote_push);
 // initializes the Kotlin or Swift plugin classes
 pub fn init<R: Runtime, C: DeserializeOwned>(
   _app: &AppHandle<R>,
-  api: PluginApi<R, C>,
+  _api: PluginApi<R, C>,
+  _config: Option<Config>,
 ) -> crate::Result<RemotePush<R>> {
   #[cfg(target_os = "android")]
-  let handle = api.register_android_plugin("app.tauri.remotepush", "PushNotificationPlugin")?;
+  let handle = {
+    let handle = _api.register_android_plugin("app.tauri.remotepush", "PushNotificationPlugin")?;
+    handle
+  };
   #[cfg(target_os = "ios")]
-  let handle = api.register_ios_plugin(init_plugin_remote_push)?;
+  let handle = _api.register_ios_plugin(init_plugin_remote_push)?;
   Ok(RemotePush(handle))
 }
 

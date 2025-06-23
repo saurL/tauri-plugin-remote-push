@@ -33,17 +33,18 @@ impl<R: Runtime, T: Manager<R>> crate::RemotePushExt<R> for T {
 }
 
 /// Initializes the plugin.
-pub fn init<R: Runtime>() -> TauriPlugin<R> {
-  Builder::new("remote-push")
+pub fn init<R: Runtime>() -> TauriPlugin<R, Option<Config>> {
+  Builder::<R, Option<Config>>::new("remote-push")
     .invoke_handler(tauri::generate_handler![
       commands::get_token,
       commands::request_permission
     ])
     .setup(|app, api| {
+      let config = api.config().clone();
       #[cfg(mobile)]
-      let remote_push = mobile::init(app, api)?;
+      let remote_push = mobile::init(app, api, config)?;
       #[cfg(desktop)]
-      let remote_push = desktop::init(app, api)?;
+      let remote_push = desktop::init(app, api, config)?;
       app.manage(remote_push);
       Ok(())
     })

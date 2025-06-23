@@ -6,6 +6,7 @@ use crate::models::*;
 pub fn init<R: Runtime, C: DeserializeOwned>(
   app: &AppHandle<R>,
   _api: PluginApi<R, C>,
+  _config: Option<Config>,
 ) -> crate::Result<RemotePush<R>> {
   Ok(RemotePush(app.clone()))
 }

@@ -46,6 +46,23 @@ pub fn run() {
 }
 ```
 
+### 3. Configure the Plugin (Android)
+
+In your `src-tauri/tauri.conf.json` file, you must add the plugin configuration and provide your Firebase **Sender ID**. This allows the plugin to identify your application with Google's messaging services.
+
+You can find your Sender ID in the Firebase Console under **Project settings > Cloud Messaging**.
+
+```json
+// src-tauri/tauri.conf.json
+{
+  "plugins": {
+    "remote-push": {
+      "senderId": "YOUR_SENDER_ID_HERE"
+    }
+  }
+}
+```
+
 ---
 
 ## Platform-Specific Configuration
@@ -96,36 +113,95 @@ This is the **critical manual step** required to make the plugin functional.
 
 ### Android Configuration
 
-1.  **Add `google-services.json`**:
-    *   Go to your Firebase project settings.
-    *   Download the `google-services.json` file for your Android app.
-    *   Place this file in the `src-tauri/gen/android/[YOUR_APP_NAME]/app/` directory.
+This section is **critical** for Android to function. If you misconfigure this, your app will fail to initialize Firebase and will likely show a **blank white screen** on startup.
 
-2.  **Modify `build.gradle` file**:
-    *   **Project-level** (`src-tauri/gen/android/[YOUR_APP_NAME]/build.gradle`): Add the Google services classpath.
-        ```groovy
-        // buildscript -> dependencies
-        dependencies {
-            // Note: Check for the latest version of this library
-            classpath 'com.google.gms:google-services:4.4.1'
-        }
-        ```
+**1. Configure Gradle**
 
-3.  **Modify `AndroidManifest.xml`**: Open `src-tauri/gen/android/[YOUR_APP_NAME]/app/src/main/AndroidManifest.xml` and register the `FCMService` inside the `<application>` tag.
+You need to add the Google Services plugin to your Android project's Gradle configuration. Your project may use the modern Kotlin `build.gradle.kts` syntax or the older Groovy `build.gradle` syntax. Make sure you edit the correct files.
 
-    ```xml
-    <application ...>
-        ...
-        <service
-            android:name="app.tauri.remotepush.FCMService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-        ...
-    </application>
-    ```
+**A) Project-Level Gradle File**
+
+This file is located at `src-tauri/gen/android/[YOUR_APP_NAME]/build.gradle.kts` (or `.gradle`).
+
+*If you have a `build.gradle.kts` (Kotlin) file:*
+```kotlin
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id("com.android.application") version "8.2.2" apply false
+    id("org.jetbrains.kotlin.android") version "1.9.0" apply false
+    // 1. Add this line
+    id("com.google.gms.google-services") version "4.4.1" apply false
+}
+```
+
+*If you have a `build.gradle` (Groovy) file:*
+```groovy
+buildscript {
+    repositories {
+        // Make sure you have google() here
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // ... other classpaths
+        // 1. Add this line
+        classpath 'com.google.gms:google-services:4.4.1'
+    }
+}
+```
+
+**B) App-Level Gradle File**
+
+This file is located at `src-tauri/gen/android/[YOUR_APP_NAME]/app/build.gradle.kts` (or `.gradle`).
+
+*If you have a `build.gradle.kts` (Kotlin) file:*
+```kotlin
+// 1. Add this block at the top of the file
+plugins {
+    id("com.google.gms.google-services")
+}
+
+// ... rest of the file
+android {
+    // ...
+}
+```
+
+*If you have a `build.gradle` (Groovy) file:*
+```groovy
+// 1. Add this line at the very top of the file
+apply plugin: 'com.google.gms.google-services'
+
+android {
+    // ...
+}
+```
+
+**2. Add `google-services.json`**
+
+This step is the same for all projects.
+
+*   Go to your Firebase project settings. In the "General" tab, under "Your apps", select your Android application.
+*   Download the `google-services.json` file.
+*   Place this file in your app's module directory: `src-tauri/gen/android/[YOUR_APP_NAME]/app/`.
+
+**3. Register the Notification Service**
+
+Open `src-tauri/gen/android/[YOUR_APP_NAME]/app/src/main/AndroidManifest.xml` and register the `FCMService` inside the `<application>` tag. This allows your app to receive notifications when it's in the background.
+
+```xml
+<application ...>
+    ...
+    <service
+        android:name="app.tauri.remotepush.FCMService"
+        android:exported="false">
+        <intent-filter>
+            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+        </intent-filter>
+    </service>
+    ...
+</application>
+```
 
 ---
 
