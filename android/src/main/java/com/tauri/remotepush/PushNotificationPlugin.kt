@@ -13,9 +13,10 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-val scope = CoroutineScope(Dispatchers.Default)
+val mainScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
 @TauriPlugin(
     permissions = [
@@ -49,9 +50,18 @@ class PushNotificationPlugin(private val activity: Activity) : Plugin(activity) 
 
     @Command
     override fun requestPermissions(invoke: Invoke) {
-        scope.launch {
+        mainScope.launch {
             requestPermissionForAlias("notifications", invoke, "requestPermissionsCallback")
         }
+    }
+
+    @app.tauri.annotation.PermissionCallback
+    fun requestPermissionsCallback(invoke: Invoke) {
+        val permissions = JSObject()
+        val state = getPermissionState("notifications")
+        permissions.put("permissionState", state.toString().lowercase())
+        trigger("permissionStateChange", permissions)
+        invoke.resolve()
     }
 
     fun handleNewToken(token: String) {

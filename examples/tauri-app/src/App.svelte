@@ -20,7 +20,7 @@
 
   function _requestPermission() {
     requestPermission().then(updateResponse).catch(updateResponse)
-  }
+	}
 
   onNotificationReceived(updateResponse);
   onTokenRefresh(updateResponse);

@@ -19,7 +19,7 @@ impl<R: Runtime> RemotePush<R> {
     Ok("".to_string())
   }
 
-  pub async fn request_permission(&self) -> crate::Result<PermissionState> {
-    Ok(PermissionState { granted: true })
+  pub fn request_permission(&self) -> crate::Result<()> {
+    Ok(())
   }
 }

@@ -8,8 +8,6 @@ pub(crate) async fn get_token<R: Runtime>(app: AppHandle<R>) -> Result<String> {
 }
 
 #[command]
-pub(crate) async fn request_permission<R: Runtime>(
-    app: AppHandle<R>,
-) -> Result<crate::models::PermissionState> {
-    app.remote_push().request_permission().await
+pub(crate) fn request_permission<R: Runtime>(app: AppHandle<R>) -> Result<()> {
+    app.remote_push().request_permission()
 }
