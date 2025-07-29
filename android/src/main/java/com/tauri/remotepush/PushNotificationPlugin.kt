@@ -44,7 +44,7 @@ class PushNotificationPlugin(private val activity: Activity) : Plugin(activity) 
             val token = task.result
             val result = JSObject()
             result.put("token", token)
-            invoke.resolve(token)
+            invoke.resolve(result)
         }
     }
 

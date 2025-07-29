@@ -307,10 +307,10 @@
           "markdownDescription": "Denies the ping command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the remote-push plugin\n#### This default permission set includes:\n\n- `allow-get-token`\n- `allow-request-permission`",
+          "description": "Default permissions for the remote-push plugin\n#### This default permission set includes:\n\n- `allow-get-token`\n- `allow-request-permission`\n- `allow-on-notification-received`\n- `allow-on-token-refresh`\n- `allow-on-notification-tapped`",
           "type": "string",
           "const": "default",
-          "markdownDescription": "Default permissions for the remote-push plugin\n#### This default permission set includes:\n\n- `allow-get-token`\n- `allow-request-permission`"
+          "markdownDescription": "Default permissions for the remote-push plugin\n#### This default permission set includes:\n\n- `allow-get-token`\n- `allow-request-permission`\n- `allow-on-notification-received`\n- `allow-on-token-refresh`\n- `allow-on-notification-tapped`"
         },
         {
           "description": "Allows retrieving the push notification token",
@@ -327,19 +327,19 @@
         {
           "description": "Allows requesting user permission for notifications",
           "type": "string",
-          "const": "allow-request-permission",
+          "const": "allow-on-notification-received",
           "markdownDescription": "Allows requesting user permission for notifications"
         },
         {
           "description": "Allows requesting user permission for notifications",
           "type": "string",
-          "const": "allow-request-permission",
+          "const": "allow-on-token-refresh",
           "markdownDescription": "Allows requesting user permission for notifications"
         },
         {
           "description": "Allows requesting user permission for notifications",
           "type": "string",
-          "const": "allow-request-permission",
+          "const": "allow-on-notification-tapped",
           "markdownDescription": "Allows requesting user permission for notifications"
         }
       ]

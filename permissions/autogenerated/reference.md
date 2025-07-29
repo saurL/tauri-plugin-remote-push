@@ -6,6 +6,9 @@ Default permissions for the remote-push plugin
 
 - `allow-get-token`
 - `allow-request-permission`
+- `allow-on-notification-received`
+- `allow-on-token-refresh`
+- `allow-on-notification-tapped`
 
 ## Permission Table
 
@@ -71,7 +74,7 @@ Allows requesting user permission for notifications
 <tr>
 <td>
 
-`remote-push:allow-request-permission`
+`remote-push:allow-on-notification-received`
 
 </td>
 <td>
@@ -84,7 +87,7 @@ Allows requesting user permission for notifications
 <tr>
 <td>
 
-`remote-push:allow-request-permission`
+`remote-push:allow-on-token-refresh`
 
 </td>
 <td>
@@ -97,7 +100,7 @@ Allows requesting user permission for notifications
 <tr>
 <td>
 
-`remote-push:allow-request-permission`
+`remote-push:allow-on-notification-tapped`
 
 </td>
 <td>
