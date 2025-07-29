@@ -2,7 +2,10 @@
 description = "Default permissions for the remote-push plugin"
 permissions = [
   "allow-get-token",
-  "allow-request-permission"
+  "allow-request-permission",
+  "allow-on-notification-received",
+  "allow-on-token-refresh",
+  "allow-on-notification-tapped"
 ]
 
 [[permission]]
@@ -14,3 +17,18 @@ commands.allow = ["get_token"]
 identifier = "allow-request-permission"
 description = "Allows requesting user permission for notifications"
 commands.allow = ["request_permission"]
+
+[[permission]]
+identifier = "allow-on-notification-received"
+description = "Allows requesting user permission for notifications"
+commands.allow = ["on_notification_received"]
+
+[[permission]]
+identifier = "allow-on-token-refresh"
+description = "Allows requesting user permission for notifications"
+commands.allow = ["on_token_refresh"]
+
+[[permission]]
+identifier = "allow-on-notification-tapped"
+description = "Allows requesting user permission for notifications"
+commands.allow = ["on_notification_tapped"]

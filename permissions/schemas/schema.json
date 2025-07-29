@@ -323,6 +323,24 @@
           "type": "string",
           "const": "allow-request-permission",
           "markdownDescription": "Allows requesting user permission for notifications"
+        },
+        {
+          "description": "Allows requesting user permission for notifications",
+          "type": "string",
+          "const": "allow-request-permission",
+          "markdownDescription": "Allows requesting user permission for notifications"
+        },
+        {
+          "description": "Allows requesting user permission for notifications",
+          "type": "string",
+          "const": "allow-request-permission",
+          "markdownDescription": "Allows requesting user permission for notifications"
+        },
+        {
+          "description": "Allows requesting user permission for notifications",
+          "type": "string",
+          "const": "allow-request-permission",
+          "markdownDescription": "Allows requesting user permission for notifications"
         }
       ]
     }

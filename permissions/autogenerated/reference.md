@@ -67,4 +67,43 @@ Allows requesting user permission for notifications
 
 </td>
 </tr>
+
+<tr>
+<td>
+
+`remote-push:allow-request-permission`
+
+</td>
+<td>
+
+Allows requesting user permission for notifications
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`remote-push:allow-request-permission`
+
+</td>
+<td>
+
+Allows requesting user permission for notifications
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`remote-push:allow-request-permission`
+
+</td>
+<td>
+
+Allows requesting user permission for notifications
+
+</td>
+</tr>
 </table>
