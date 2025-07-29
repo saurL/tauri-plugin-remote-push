@@ -28,15 +28,19 @@ pub fn init<R: Runtime, C: DeserializeOwned>(
 
 /// Access to the remote-push APIs.
 pub struct RemotePush<R: Runtime>(PluginHandle<R>);
-#[derive(DeserializeOwned)]
+#[derive(Deserialize)]
 pub struct getTokenResponse {
     /// The token used to send push notifications.
     pub token: String,
 }
 
 impl<R: Runtime> RemotePush<R> {
-    pub fn get_token(&self) -> crate::Result<getTokenResponse> {
-        self.0.run_mobile_plugin("getToken", ()).map_err(Into::into)
+    pub fn get_token(&self) -> crate::Result<String> {
+        let token_reponse = self
+            .0
+            .run_mobile_plugin("getToken", ())
+            .map_err(Into::into)?;
+        Ok(token_reponse.token)
     }
 
     pub fn request_permission(&self) -> crate::Result<()> {
