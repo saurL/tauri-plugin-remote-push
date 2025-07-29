@@ -36,7 +36,7 @@ pub struct getTokenResponse {
 
 impl<R: Runtime> RemotePush<R> {
     pub fn get_token(&self) -> crate::Result<String> {
-        let token_reponse = self
+        let token_reponse: getTokenResponse = self
             .0
             .run_mobile_plugin("getToken", ())
             .map_err(Into::into)?;
