@@ -28,7 +28,7 @@ pub fn init<R: Runtime, C: DeserializeOwned>(
 
 /// Access to the remote-push APIs.
 pub struct RemotePush<R: Runtime>(PluginHandle<R>);
-#[derive(Deserialize)]
+#[derive(Deserialize, DeserializeOwned)]
 pub struct getTokenResponse {
     /// The token used to send push notifications.
     pub token: String,
