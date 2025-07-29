@@ -11,3 +11,9 @@ pub struct Config {
 pub struct PermissionState {
     pub granted: bool,
 }
+
+#[derive(Deserialize)]
+pub struct getTokenResponse {
+    /// The token used to send push notifications.
+    pub token: String,
+}
